@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff7f4">
+    <meta name="description" content="A little question from someone who thinks you're wonderful.">
+    <title>For someone special</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <span class="decor decor-one" aria-hidden="true">♡</span>
+    <span class="decor decor-two" aria-hidden="true">✦</span>
+    <span class="decor decor-three" aria-hidden="true">♡</span>
+
+    <main class="card" aria-label="A letter for you">
+      <button class="envelope" id="open-envelope" type="button" aria-label="Hi you, open your letter" aria-expanded="false" aria-controls="letter">
+        <span class="envelope-content">
+          <span class="envelope-greeting" aria-hidden="true">Hey you</span>
+          <span class="envelope-hint">Tap to open your letter</span>
+        </span>
+      </button>
+
+      <section class="letter" id="letter" aria-labelledby="question" hidden>
+        <div class="sticker" aria-hidden="true">💌</div>
+        <h1 id="question" tabindex="-1">So...</h1>
+        <p class="message letter-message" id="message">
+          I've loved getting to know you and you make my days so much brighter.<br>Your laugh, your kindness, the way you make ordinary moments feel special...<br> I'd love to make you smile the way you make me smile.
+        </p>
+        <div class="buttons">
+          <button class="yes" id="yes-button" type="button">Yes, of course! 💗</button>
+          <button class="no" id="no-button" type="button">Not right now</button>
+        </div>
+        <p class="note" id="note" role="status" aria-live="polite"></p>
+        <p class="signature" id="signature">Made with a little bit of courage -T</p>
+      </section>
+    </main>
+
+    <script>
+      const envelope = document.querySelector("#open-envelope");
+      const letter = document.querySelector("#letter");
+      const question = document.querySelector("#question");
+      const message = document.querySelector("#message");
+      const note = document.querySelector("#note");
+      const signature = document.querySelector("#signature");
+      const yesButton = document.querySelector("#yes-button");
+      const noButton = document.querySelector("#no-button");
+
+      envelope.addEventListener("click", () => {
+        envelope.setAttribute("aria-expanded", "true");
+        envelope.hidden = true;
+        letter.hidden = false;
+        letter.classList.add("letter-open");
+        question.focus();
+      });
+
+      noButton.addEventListener("click", () => {
+        note.textContent = "That's okay — thank you for being honest 🤍";
+      });
+
+      yesButton.addEventListener("click", () => {
+        question.innerHTML = "You just made<br>my whole heart happy!";
+        message.textContent = "Here's to little adventures, lots of laughter, and making lovely memories together.";
+        note.textContent = "Best. answer. ever. 💞";
+        signature.textContent = "Officially the luckiest person ✿";
+        yesButton.disabled = true;
+        noButton.hidden = true;
+
+        for (let index = 0; index < 18; index += 1) {
+          const heart = document.createElement("span");
+          heart.className = "burst-heart";
+          heart.setAttribute("aria-hidden", "true");
+          heart.textContent = index % 3 === 0 ? "✦" : "♥";
+          heart.style.setProperty("--x", `${Math.random() * 360 - 180}px`);
+          heart.style.setProperty("--y", `${Math.random() * -320 - 60}px`);
+          heart.style.setProperty("--turn", `${Math.random() * 100 - 50}deg`);
+          heart.style.setProperty("--size", `${Math.random() * 16 + 14}px`);
+          document.body.append(heart);
+          heart.addEventListener("animationend", () => heart.remove(), { once: true });
+        }
+      });
+    </script>
+  </body>
+</html>
